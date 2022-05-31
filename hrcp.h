@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #ifndef hrcp  
 #define hrcp  
-double hc_float(int digitos)
+float hc_float(int digitos)
 {
     if (digitos <= 0)
         return 0;
@@ -113,10 +113,10 @@ double hc_float(int digitos)
     } while (caracter != 13);
     //retornamos en valor en tipo "float".
     
-    char *eptr;
+   /* char *eptr;
     double result;
     return result = strtod(digitos_string, &eptr);
-
+	*/	
     return atof(digitos_string);
 }
 
