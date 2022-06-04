@@ -24,16 +24,12 @@ main() {
 	do{
 		system("cls");
 		printf("*** CALCULADORA UPSIN TCI 3-2 *** \n\n");
-		printf("Ingrese el numero 1: ");
-		scanf("%f",&n1);
-		printf("Ingrese el numero 2: ");
-		scanf("%f",&n2);
 		printf("\n*** MENU DE OPERACIONES *** ");
 		printf("\n\n(1) -- Sumar \n");
 		printf("(2) -- Restar \n");
 		printf("(3) -- Dividir \n");
 		printf("(4) -- Multiplicar \n");
-		printf("(5) -- Salir \n");
+		printf("(5) -- Salir \n\n");
 		do{
 			printf("Elija una opcion del menu: ");
 			c=getch();
@@ -41,6 +37,15 @@ main() {
 				printf("\r");
 			}
 		}while(c>53 || c<49);
+		if(c==53){
+			continue;
+		}
+		
+		printf("\n\nIngrese el numero 1: ");
+		scanf("%f",&n1);
+		printf("Ingrese el numero 2: ");
+		scanf("%f",&n2);
+		
 		res_valido=1;
 		if(c==49){
 			//sumar
@@ -64,8 +69,8 @@ main() {
 		}
 		if(res_valido==1){
 			printf("\n\nEl resultado es: %.2f",res);
-			getch();
 		}
+		getch();
 	}while(c!=53);
 }
 
