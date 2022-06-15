@@ -192,8 +192,6 @@ int hc_int(int digitos)
     } while (caracter != 13);
     //retornamos en valor en tipo "int".
     char *eptr;
-    double result;
-    return result = strtod(digitos_string, &eptr);
     return atoi(digitos_string);
 }
 
