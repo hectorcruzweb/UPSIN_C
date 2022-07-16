@@ -6,6 +6,11 @@
 #include <time.h>
 #ifndef hrcp  
 #define hrcp  
+
+int last_y=0;
+char texto[100]={'\0'};
+char ti[100]={'\0'};
+
 float hc_float(int digitos)
 {
     if (digitos <= 0)
@@ -284,6 +289,14 @@ void valifec(char *pfecha){
 	}while(fec!=1);
 }
 
+void hc_toupper(char *text){
+	for (int i = 0; text[i]!='\0'; i++) {
+      if(text[i] >= 'a' && text[i] <= 'z') {
+         text[i] = text[i] -32;
+      }
+   }
+}
+
 void hc_letters(int lon,char *pnom){
 	 if (lon <= 0){
 	 	return;
@@ -387,10 +400,123 @@ void gotoxy(int X, int Y){
 	SetConsoleCursorPosition(hcon,dwPos);
 }
 
-
-
 int r_number(int min,int max){
 	return (rand() % (max - min + 1)) + min;
 }
+
+
+bool file_exists(const char *filename)
+{
+    FILE *fp = fopen(filename, "r");
+    bool is_exist = false;
+    if (fp != NULL)
+    {
+        is_exist = true;
+        fclose(fp); // close the file
+    }
+    return is_exist;
+}
+
+void text_center(char *texto,int y){
+	gotoxy(0,0);
+	int s=strlen(texto);
+	gotoxy(60-(s/2),y);
+	printf(texto);
+	gotoxy(60-(s/2)+s+2,y);
+}
+
+void text_x(char *texto,int x,int y){
+	gotoxy(0,0);
+	int s=strlen(texto);
+	gotoxy(x-(s/2),y);
+	printf(texto);
+	gotoxy(x-(s/2)+s+2,y);
+}
+
+
+void main_s(){
+	for(int x=0;x<120;x++){
+		gotoxy(x,0);
+		printf("*");
+		gotoxy(x,1);
+		printf("*");
+		gotoxy(x,28);
+		printf("*");
+		gotoxy(x,29);
+		printf("*");
+	}
+	
+	for(int y=0;y<29;y++){
+		gotoxy(0,y);
+		printf("*");
+		gotoxy(1,y);
+		printf("*");
+		gotoxy(119,y);
+		printf("*");
+		gotoxy(118,y);
+		printf("*");
+	}
+}
+
+int yes_no(char *question,int x,int y,int c,int ver_volver){
+	int res=0;
+    do {
+    	printf("\b \b");
+        //creamos el menú
+        if(c==0){
+	        text_x(("*** %s *** ",question),x,y);
+	        text_x("(1) -- Si",x,y+2);
+	        text_x("(2) -- No",x,y+4);
+	        if(ver_volver==1){
+			 text_x("(3) -- Volver",x,y+6);
+			 text_x("ELIJA UNA OPCION:",x,y+8);	
+			}else{
+				text_x("ELIJA UNA OPCION:",x,y+6);		
+			}
+		}else{
+			system("cls");
+        	main_s();
+			text_center((" *** %s *** ",question),10);
+	        text_center("(1) -- Si",12);
+	        text_center("(2) -- No",14);
+	        if(ver_volver==1){
+			text_center("(3) -- Volver",16);
+	        text_center("ELIJA UNA OPCION:",18);	
+			}else{
+				text_center("ELIJA UNA OPCION:",16);	
+			}
+		}
+        res = hc_int(1);
+    } while ((ver_volver==1 && (res < 1  || res>3))|| (ver_volver==0 && (res < 1  || res>2)));
+    return res;
+}
+
+void rm(char *filename){
+	if(file_exists(filename)){
+		if (remove(filename) != 0){
+			printf("%s error\n",filename);
+			exit(1);
+		}	
+	}	
+}
+
+bool error_torneo(){
+	if(!file_exists("equipos.txt")){
+		main_s();
+		text_center("Error de los archivos, reinicie el torneo.",14);
+		getch();
+		return true;
+	}
+	if(!file_exists("tipos.txt")){
+		main_s();
+		text_center("Error de los archivos, reinicie el torneo.",14);
+		getch();
+		return true;
+	}
+	return false;
+}
+
+
+
 
 #endif  
