@@ -8,7 +8,7 @@
 #include "jornadas.h"
 #define tdj 17
 #define jpj 9
-#define total_juegos tdj* jpj
+#define total_juegos_j tdj* jpj
 #ifndef equipos  
 #define equipos  
 int tde=18;
@@ -180,10 +180,10 @@ void comenzar_torneo()
 		exit(1);
 	}
 	system("cls");
-    main_s();
-	text_center("<<< SE HA INICIADO UN NUEVO TORNEO >>>",14);
 	//Creamos los archivos para las jornadas y juegos
 	crear_files_juegos_jornadas();
+	main_s();
+	text_center("<<< SE HA INICIADO UN NUEVO TORNEO >>>",14);
 	getch();
 }
 

@@ -516,6 +516,17 @@ bool error_torneo(){
 	return false;
 }
 
+void date_add_days(int days, char* date_text){
+	time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    /*
+    printf("Date and time: %d-%02d-%02d %02d:%02d:%02d\n",tm.tm_mday, tm.tm_mon + 1,tm.tm_year + 1900, tm.tm_hour, tm.tm_min, tm.tm_sec);
+    */                                                            
+    tm.tm_mday += days;
+    mktime(&tm);
+    // Print the date in ISO-8601 format.                                                         
+    strftime(date_text, 30, "%Y-%m-%d", &tm);
+}
 
 
 
