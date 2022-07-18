@@ -5,6 +5,7 @@
 #include<string.h>
 #include <time.h>
 #include "hrcp.h"
+#include "juegos.h"
 #ifndef jornadas  
 #define jornadas  
 
@@ -24,14 +25,7 @@ struct Jornada{
     int tipo_id;
 };
 
-struct Juegos {
-    int id;
-    int id_e1;
-    int id_e2;
-    int id_j;
-    int goles_e1;
-    int goles_e2;
-};
+
 
 Tipo *leer_tipos(char *filename,int *total){
 	f_tipos=fopen(filename,"rb");
@@ -114,6 +108,7 @@ void crear_files_juegos_jornadas(){
 	int fecha_inicial=1;
 	for(int x=0;x<t_j;x++){
 		if(x<17){
+			generar_calendario(x+1,fecha_inicial,fecha_inicial+6,1);
 			//puras jornadas
 			date_add_days(fecha_inicial,jornada[x].fecha_1);
 			fecha_inicial+=6;
@@ -183,7 +178,7 @@ void crear_files_juegos_jornadas(){
 		if (fclose(f_jornadas)==EOF){
 			exit(1);
 		}
-	
+	getch();
 }
 
 #endif  

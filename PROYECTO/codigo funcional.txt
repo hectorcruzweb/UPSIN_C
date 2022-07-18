@@ -1,0 +1,103 @@
+struct Jornada {
+    int id;
+    char fecha_1[12];
+    char fecha_2[12];
+} n_jornada[tdj];
+
+struct Juegos {
+    int id;
+    int num;
+    int id_e1;
+    int id_e2;
+    int id_j;
+    int goles_e1;
+    int goles_e2;
+} n_juegos[total_juegos];
+
+
+
+int jornadas_jugadas(){
+	for(int index=0;index<tdj;index++){
+		if(n_jornada[index].id==NULL){
+			return index;
+		}
+	}
+	return tdj;
+}
+
+int juegos_asignados(){
+	for(int index=0;index<total_juegos;index++){
+		if(n_juegos[index].id==NULL){
+			return index;
+		}
+	}
+	return tdj;
+}
+
+void generar_calendario_jornadas(int jornada){
+	int num_juego=juegos_asignados();
+	if(jornada<=0 || jornada>17){
+		printf("Solo se pueden generar 17 jornadas.");
+		return;
+	}
+	//verificar si la jornada es valida de hacer
+	for(int x=0;x<tdj;x++){
+		//viendo si ya existe
+		if(n_jornada[x].id==jornada){
+			printf("Esta jornada ya existe");
+			return;
+		}
+	}
+	for(int x=0;x<tdj;x++){
+		if(jornada>1){
+			if(n_jornada[jornada-1].id==NULL){
+				printf("No se pueden generar jornadas fueras del orden.");
+				return;
+			}
+		}
+	}
+	for(int juego=1;juego<=jpj;juego++){
+		int num_juego=juegos_asignados();
+		int seguir=0;
+		while(seguir!=1){
+			int e1=r_number(1,tde);//Equipo 1
+			int e2=r_number(1,tde);//Equipo 2
+			if(e1==e2){
+				//son los mismos equipos, no aplica
+				//printf("%d vs %d \n",e1,e2);
+				//getch();
+				//system("cls");
+				continue;
+			}else{
+				//se deben buscar si el juego ya fue asignado
+				int juego_valido=1;
+				for(int j=0;j<(jpj*jornada);j++){
+					if((n_juegos[j].id_e1==e1 && n_juegos[j].id_e2==e2) || (n_juegos[j].id_e1==e2 && n_juegos[j].id_e2==e1)) {
+						//juego no valido
+						//printf("No aplica %d vs %d \n",e1,e2);
+						juego_valido=0;
+						break;
+					}
+				}
+				for(int j=(jpj*(jornada-1));j<(jpj*jornada);j++){
+					if((n_juegos[j].id_e1==e1 || n_juegos[j].id_e1==e2 || n_juegos[j].id_e2==e1 || n_juegos[j].id_e2==e2)) {
+						//juego no valido
+						juego_valido=0;
+						break;
+					}
+					//buscar si no tienen juego asigando ya en la jornada
+				}
+				if(juego_valido==1){
+					int num_juego=(jpj*(jornada-1))+juego-1;
+					//asignamos juego
+					n_juegos[num_juego].id_e1=e1;
+					n_juegos[num_juego].id_e2=e2;
+					n_juegos[num_juego].id_j=jornada;
+					n_juegos[num_juego].num=num_juego+1;
+					printf("%d --> %d vs %d \n",num_juego+1,e1,e2);
+					seguir=1;
+				}
+			}
+		}
+	}
+}

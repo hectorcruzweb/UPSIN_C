@@ -407,7 +407,7 @@ int r_number(int min,int max){
 
 bool file_exists(const char *filename)
 {
-    FILE *fp = fopen(filename, "r");
+    FILE *fp = fopen(filename, "rb");
     bool is_exist = false;
     if (fp != NULL)
     {

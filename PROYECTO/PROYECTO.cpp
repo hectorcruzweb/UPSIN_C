@@ -44,6 +44,10 @@ main()
 	                break;
 	            }
 	            case 50: {
+	            	rm("juegos.txt");
+	            	//printf("%d",juegos_asignados());
+	            	//getch();
+					crear_files_juegos_jornadas();
 	                break;
 	            }
 	            case 51: {

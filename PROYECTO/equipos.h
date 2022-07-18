@@ -7,7 +7,6 @@
 #include "hrcp.h"
 #include "jornadas.h"
 #define tdj 17
-#define jpj 9
 #define total_juegos_j tdj* jpj
 #ifndef equipos  
 #define equipos  
