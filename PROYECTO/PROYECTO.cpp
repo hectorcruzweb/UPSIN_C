@@ -51,7 +51,9 @@ main()
 	                break;
 	            }
 	            case 51: {
-	            	tabla_general();
+	            	display_juegos();
+	            	//tabla_general();
+	            	getch();
 	                break;
 	            }
             }

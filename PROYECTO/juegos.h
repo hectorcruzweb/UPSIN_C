@@ -33,18 +33,19 @@ int juegos_asignados(){
 	return x;
 }
 
-Juegos_s *leer_juegos(char *filename,int *total){
-	f_juegos=fopen(filename,"rb");
+Juegos_s *leer_juegos(){
+	int j1=juegos_asignados();
+	
+	f_juegos=fopen("juegos.txt","rb");
+	
 	if (f_juegos == NULL) {
         printf("error opening file !\n");
         exit(1);
     }
-    if(fread(total,sizeof(int),1,f_juegos)!=1){
-    	exit(1);
-	}
-	Juegos_s *datos=(Juegos_s *)malloc(sizeof(Juegos_s) * *total);
-	if(fread(datos,sizeof(datos),*total,f_juegos)!=*total){
-		printf("No se han podido leer los %d datos.\n",*total);
+    
+	Juegos_s *datos=(Juegos_s *)malloc(sizeof(Juegos_s) * j1);
+	if(fread(datos,sizeof(datos),j1,f_juegos)!=j1){
+		printf("No se han podido leer los %d datos.\n",j1);
 		free(datos);
     	exit(1);
 	}
@@ -55,44 +56,54 @@ Juegos_s *leer_juegos(char *filename,int *total){
 	return datos;
 }
 
+void display_juegos(){
+	Juegos_s *datos;
+	datos=leer_juegos();
+	if(datos==NULL){
+		printf("No se han podido leer los datos.\n");
+		exit(1);
+	}
+	
+	
+	for(int x=0;x<juegos_asignados();x++){
+	 printf("\n Id %d Jor %d  %d vs %d", datos[x].id,datos[x].id_j,datos[x].id_e1,datos[x].id_e2);
+		
+		if(x>0){
+			if(datos[x].id_j>datos[x-1].id_j){
+				 printf("\n====================================\n");
+			}
+		}
+	}
+}
+
 void  generar_calendario(int jornada,int dias_min,int dias_max,int tipo_j){
 	if(tipo_j==1){
 		//es jornada
 		for(int x=(9*(jornada-1));x<(jornada*9);x++){
-			int valido=0;
-			int e1=1,e2=18;
+			int ee1=0,ee2=0;
 			if(file_exists("juegos.txt")){
 				//leer datos del archivo y verificar
 				int j1=juegos_asignados();
-				Juegos_s *datos=leer_juegos("juegos.txt",&j1);
-				printf("jornada %d juego %d registros %d  %d vs %d \n",jornada,x+1,j1,datos[x].id_e1,datos[x].id_e2);
+				Juegos_s *datos;
+				datos=leer_juegos();
+				printf("jornada %d juego %d registros %d  %d vs %d \n",jornada,x+1,j1,datos[x-1].id_e1,datos[x-1].id_e2);
 				//verificamos si el juego a programar es válido
 				int seguir=0;
 				while(seguir!=1){
-					e1=r_number(1,18);//Equipo 1
-					e2=r_number(1,18);//Equipo 2
-					if(e1==e2){
-						//son los mismos equipos, no aplica
-						//printf("%d vs %d \n",e1,e2);
-						//getch();
-						//system("cls");
-						continue;
-					}else{
+					ee1=r_number(1,18);//Equipo 1
+					ee2=r_number(1,18);//Equipo 2
+					if(ee1!=ee2){
 						//no son los mismos equipos randon
 						//se deben buscar si el juego ya fue asignado
 						int juego_valido=1;
 						for(int j=0;j<j1;j++){
-							if((datos[j].id_e1==e1 && datos[j].id_e2==e2) || (datos[j].id_e1==e2 && datos[j].id_e2==e1)) {
-								//juego no valido
-								//printf("No aplica %d vs %d \n",e1,e2);
-								//getch();
+							if((datos[j].id_e1==ee1 && datos[j].id_e2==ee2) || (datos[j].id_e1==ee2 && datos[j].id_e2==ee1)) {
 								juego_valido=0;
 								break;
 							}
 						}
 						for(int j=(9*(jornada-1));j<j1;j++){
-							if((datos[j].id_e1==e1 || datos[j].id_e1==e2 || datos[j].id_e2==e1 || datos[j].id_e2==e2)) {
-								//juego no valido
+							if((datos[j].id_e1==ee1 || datos[j].id_e1==ee2 || datos[j].id_e2==ee1 || datos[j].id_e2==ee2)) {
 								juego_valido=0;
 								break;
 							}
@@ -100,23 +111,22 @@ void  generar_calendario(int jornada,int dias_min,int dias_max,int tipo_j){
 						}
 						if(juego_valido==1){
 							seguir=1;
-							valido=1;
+							break;
 						}
 					}
 				}
-				
 				//valido=1;
 			}else{
 				//crea el primer juego, sin importar cual sea
-				valido=1;
+				ee1=1;ee2=2;
 			}
-			if(valido==1){
+			
 				Juegos_s juego;
 				juego.id=x+1;
 				juego.goles_e1=0;
 				juego.goles_e2=0;
-				juego.id_e1=e1;
-				juego.id_e2=e2;
+				juego.id_e1=ee1;
+				juego.id_e2=ee2;
 				juego.id_j=jornada;
 				date_add_days(r_number(dias_min,dias_max),juego.fecha);
 				//guardo el primer juego
@@ -127,7 +137,7 @@ void  generar_calendario(int jornada,int dias_min,int dias_max,int tipo_j){
 			    }
 			    if(fwrite(&juego,sizeof(juego), 1, f_juegos)!=1);
 				fclose(f_juegos);
-			}
+			
 		}
 	}
 }

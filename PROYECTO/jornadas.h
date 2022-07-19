@@ -48,6 +48,7 @@ Tipo *leer_tipos(char *filename,int *total){
 	return datos;
 }
 
+
 Jornada *leer_jornadas(char *filename,int *total){
 	f_jornadas=fopen(filename,"rb");
 	if (f_tipos == NULL) {
