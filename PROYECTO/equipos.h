@@ -195,7 +195,6 @@ void tabla_general(){
 	}
 	main_s();
 	text_center("*** TABLA GENERAL DEL TORNEO ***",4);
-	
 	for(int x=0;x<tde;x++){
 		text_center(("ok %s",datos[x].nombre),4+x+2);
 		last_y=4+x+2+2;

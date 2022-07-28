@@ -103,13 +103,12 @@ void crear_files_juegos_jornadas(){
 	}
 	
 	//Creando las jornadas de juegos
-	int t_j=17+8+4+2;
+	int t_j=17+2+2+2;
 	Jornada jornada[t_j];
 	char fecha[]={'\0'};
 	int fecha_inicial=1;
 	for(int x=0;x<t_j;x++){
 		if(x<17){
-			generar_calendario(x+1,fecha_inicial,fecha_inicial+6,1);
 			//puras jornadas
 			date_add_days(fecha_inicial,jornada[x].fecha_1);
 			fecha_inicial+=6;
@@ -118,21 +117,21 @@ void crear_files_juegos_jornadas(){
 			//printf("jornada %d %s - %s\n",x+1,jornada[x].fecha_1,jornada[x].fecha_2);
     		jornada[x].id = x+1;
     		jornada[x].tipo_id = 1;
-		}else if(x<21){
+		}else if(x<18){
 			//cuartos de ida
 			date_add_days(fecha_inicial,jornada[x].fecha_1);
 			date_add_days(fecha_inicial+2,jornada[x].fecha_2);
 			//printf("Cuartos de ida %d %s - %s\n",x+1,jornada[x].fecha_1,jornada[x].fecha_2);
     		jornada[x].id = x+1;
     		jornada[x].tipo_id = 2;
-		}else if(x<25){
+		}else if(x<19){
 			//cuartos de vuelta
 			date_add_days(fecha_inicial+3,jornada[x].fecha_1);
 			date_add_days(fecha_inicial+6,jornada[x].fecha_2);
 			//printf("Cuartos de vuelta %d %s - %s\n",x+1,jornada[x].fecha_1,jornada[x].fecha_2);
     		jornada[x].id = x+1;
     		jornada[x].tipo_id = 3;
-		}else if(x<27){
+		}else if(x<20){
 			//semifinal de ida
 			date_add_days(fecha_inicial+7,jornada[x].fecha_1);
 			date_add_days(fecha_inicial+9,jornada[x].fecha_2);
@@ -140,7 +139,7 @@ void crear_files_juegos_jornadas(){
     		jornada[x].id = x+1;
     		jornada[x].tipo_id = 4;
 		}
-		else if(x<29){
+		else if(x<21){
 			//semifinal de vuelta
 			date_add_days(fecha_inicial+10,jornada[x].fecha_1);
 			date_add_days(fecha_inicial+13,jornada[x].fecha_2);
@@ -148,14 +147,14 @@ void crear_files_juegos_jornadas(){
     		jornada[x].id = x+1;
     		jornada[x].tipo_id = 5;
 		}
-		else if(x<30){
+		else if(x<22){
 			//final de ida
 			date_add_days(fecha_inicial+14,jornada[x].fecha_1);
 			date_add_days(fecha_inicial+16,jornada[x].fecha_2);
 			//printf("Final de ida %d %s - %s\n",x+1,jornada[x].fecha_1,jornada[x].fecha_2);
     		jornada[x].id = x+1;
     		jornada[x].tipo_id = 6;
-		}else if(x<31){
+		}else if(x<23){
 			//final de vuelta
 			date_add_days(fecha_inicial+17,jornada[x].fecha_1);
 			date_add_days(fecha_inicial+20,jornada[x].fecha_2);
@@ -179,7 +178,9 @@ void crear_files_juegos_jornadas(){
 		if (fclose(f_jornadas)==EOF){
 			exit(1);
 		}
-	getch();
+		
+		//calendario de jornadas
+		generar_calendario();
 }
 
 #endif  
