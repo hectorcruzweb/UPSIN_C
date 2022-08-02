@@ -1,14 +1,7 @@
-#include <stdio.h>
-#include <conio.h>
-#include <stdlib.h>
-#include <windows.h>
-#include <string.h>
-#include <time.h>
-#include "hrcp.h"
-#define tj 167
 #ifndef juegos
 #define juegos
-
+#include "equipos.h"
+#define tj 167
 FILE* f_juegos;
 struct Juegos_s {
     int id;
@@ -18,6 +11,7 @@ struct Juegos_s {
     int goles_e1;
     int goles_e2;
     char fecha[12];
+    int status;
 };
 
 struct Juegos_s calendario[tj] = { '\0' };
@@ -62,37 +56,21 @@ Juegos_s* leer_juegos()
 
 
 
-bool torneo_funcional(){
-	if(!file_exists("equipos.txt") || !file_exists("tipos.txt")|| !file_exists("jornadas.txt")|| !file_exists("juegos.txt")){
-		//borramos todos los archivos y comenzamos nuevamente
-		rm("equipos.txt");
-		rm("tipos.txt");
-		rm("jornadas.txt");
-		rm("juegos.txt");
-		system("cls");
-		//Obligamos a crea un nuevo torneo
-		main_s();
-		text_center("<<< HA OCURRIDO UN ERROR, DEBE REINICIAR EL TORNEO >>>",14);
-		getch();
-		return false;
-	}
-	return true;
-}
+
 
 void display_juegos()
 {
-	if(!torneo_funcional())return;
-	
-	
     Juegos_s* datos;
     datos = leer_juegos();
     if (datos == NULL) {
         printf("No se han podido leer los datos.\n");
         exit(1);
     }
-
+    char te1[25],te2[25];
     for (int x = 0; x < tj; x++) {
-        printf("\n%d -- %d vs %d", datos[x].id, datos[x].id_e1, datos[x].id_e2);
+    	//p_equipo(datos[x].id_e1,te1);
+    	//p_equipo(datos[x].id_e2,te2);
+        printf("\n%d -- %s vs %s   --> %d", datos[x].id, te1, te2,datos[x].status);
     }
     getch();
 }

@@ -1,15 +1,9 @@
-#include <stdio.h>
-#include <conio.h>
-#include <stdlib.h>
-#include<windows.h>
-#include<string.h>
-#include <time.h>
-#include "hrcp.h"
-#include "jornadas.h"
+#ifndef equipos  
+#define equipos 
 #define tdj 17
 #define total_juegos_j tdj* jpj
-#ifndef equipos  
-#define equipos  
+#include <stdio.h>
+
 int tde=18;
 
 FILE* f_equipos;
@@ -202,6 +196,26 @@ void tabla_general(){
 	
 	text_center("<<< PRESIONE UNA TECLA PARA CONTINUAR >>>",last_y);
 	getch();
+}
+
+void p_equipo(int id,char *equipo){
+	Equipos *datos;
+	datos=leer("equipos.txt",&tde);
+	if(datos==NULL){
+		printf("No se han podido leer los datos.\n");
+		exit(1);
+	}
+	int found=0;
+	for(int x=0;x<tde;x++){
+		if(datos[x].id==id){
+			strcpy(equipo,datos[x].nombre);
+			found=1;
+			break;
+		}
+	}
+	if(found==0){
+		strcpy(equipo,"No Existe");
+	}
 }
 
 

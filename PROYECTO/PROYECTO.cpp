@@ -3,14 +3,15 @@ Con el uso del getch
 Pedir una tecla y que se repita el ciclo do while mientras que no se capture el enter(13)
 Filtrar solo numeros y vocales
 */
+#include <stdlib.h>
 #include <stdio.h>
 #include <conio.h>
 #include <string.h>
 #include <time.h>
-#include <stdlib.h>
 #include "hrcp.h"
-#include "equipos.h"
 #include "jornadas.h"
+#include "juegos.h"
+#include "equipos.h"
 
 main()
 {

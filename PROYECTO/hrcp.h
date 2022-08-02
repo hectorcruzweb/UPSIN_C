@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <conio.h>
-#include <stdlib.h>
+#include <string.h>
 #include<windows.h>
-#include<string.h>
 #include <time.h>
 #ifndef hrcp  
 #define hrcp  
@@ -501,15 +500,16 @@ void rm(char *filename){
 }
 
 bool error_torneo(){
-	if(!file_exists("equipos.txt")){
+	if(!file_exists("equipos.txt") || !file_exists("tipos.txt")|| !file_exists("jornadas.txt")|| !file_exists("juegos.txt")){
+		//borramos todos los archivos y comenzamos nuevamente
+		rm("equipos.txt");
+		rm("tipos.txt");
+		rm("jornadas.txt");
+		rm("juegos.txt");
+		system("cls");
+		//Obligamos a crea un nuevo torneo
 		main_s();
-		text_center("Error de los archivos, reinicie el torneo.",14);
-		getch();
-		return true;
-	}
-	if(!file_exists("tipos.txt")){
-		main_s();
-		text_center("Error de los archivos, reinicie el torneo.",14);
+		text_center("<<< HA OCURRIDO UN ERROR, DEBE REINICIAR EL TORNEO >>>",14);
 		getch();
 		return true;
 	}

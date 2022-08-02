@@ -1,13 +1,7 @@
-#include <stdio.h>
-#include <conio.h>
-#include <stdlib.h>
-#include<windows.h>
-#include<string.h>
-#include <time.h>
-#include "hrcp.h"
-#include "juegos.h"
 #ifndef jornadas  
 #define jornadas  
+#include <stdio.h>
+#include <stdlib.h>
 
 FILE* f_tipos;
 FILE* f_jornadas;
@@ -182,5 +176,4 @@ void crear_files_juegos_jornadas(){
 		//calendario de jornadas
 		generar_calendario();
 }
-
 #endif  
